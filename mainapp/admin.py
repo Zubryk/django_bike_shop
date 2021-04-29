@@ -22,7 +22,7 @@ class AccessoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Category)
 admin.site.register(Bike, BikeAdmin)
-admin.site.register(Accesory, AccessoryAdmin)
+admin.site.register(Accessory, AccessoryAdmin)
 admin.site.register(CartProduct)
 admin.site.register(Cart)
 admin.site.register(Customer)
