@@ -107,7 +107,7 @@ class CartProduct(models.Model):
         return self.content_object.title
 
     def save(self, *args, **kwargs):
-        self.final_price = self.qty * self.content_object.price
+        self.final_price = self.qty * self.content_object.price, 2
         super().save(*args, **kwargs)
 
 
@@ -123,6 +123,15 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def save(self, *args, **kwargs):
+        cart_data = self.products.aggregate(models.Sum('final_price'), models.Count('id'))
+        print(cart_data)
+        if cart_data.get('final_price__sum'):
+            self.final_price = round(cart_data['final_price__sum'], 2)
+        else:
+            self.final_price = 0
+        self.total_products = cart_data['id__count']
+        super().save(*args, **kwargs)
 
 class Customer(models.Model):
 

@@ -69,10 +69,13 @@ class AddToCartView(View):
         cart_product, created = CartProduct.objects.get_or_create(
             user = cart.owner,
             cart = cart,
-            content_type = content_type
+            content_type = content_type,
+            object_id=product.id
         )
         if created:
             cart.products.add(cart_product)
+        cart.save()
+            
         return HttpResponseRedirect('/cart/')
 
 class CartView(View):
@@ -80,4 +83,5 @@ class CartView(View):
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user = request.user)
         cart = Cart.objects.get(owner = customer)
+        cart.save()
         return render(request, 'cart.html', {'cart' : cart})
