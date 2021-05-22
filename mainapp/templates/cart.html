@@ -11,16 +11,18 @@
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Final price</th>
+            <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
         {% for item in cart.products.all %}
         <tr>
-            <th scope="row">{{ item.content_object.title }}</th>
+            <th scope="row">{{ item.content_object.title }}</th> 
             <td class="w-25"><img src="{{ item.content_object.image.url }}" alt="" class="img-fluid"></td>
             <td>{{ item.content_object.price }} $</td>
             <td>{{ item.qty}}</td>
             <td>{{ item.final_price }} $</td>
+            <td><a href="{% url 'delete_from_cart' ct_model=item.content_object.get_model_name slug=item.content_object.slug %}"><button class="btn btn-danger">Remove from cart</button></a></td>
         </tr>
         {% endfor %}
         <tr>

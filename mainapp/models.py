@@ -59,6 +59,9 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    def get_model_name(self):
+        return self.__class__._meta.model_name
+
 class Bike(Product):
 
     bike_type = models.CharField(max_length=10)
@@ -125,7 +128,6 @@ class Cart(models.Model):
 
     def save(self, *args, **kwargs):
         cart_data = self.products.aggregate(models.Sum('final_price'), models.Count('id'))
-        print(cart_data)
         if cart_data.get('final_price__sum'):
             self.final_price = round(cart_data['final_price__sum'], 2)
         else:

@@ -78,10 +78,29 @@ class AddToCartView(View):
             
         return HttpResponseRedirect('/cart/')
 
+class DeleteFromView(View):
+
+    def get(self, request, *args, **kwargs):
+        ct_model, product_slug = kwargs.get('ct_model'), kwargs.get('slug')
+        customer = Customer.objects.get(user = request.user)
+        cart = Cart.objects.get(owner = customer, in_order = False)
+        content_type = ContentType.objects.get(model = ct_model)
+        product = content_type.model_class().objects.get(slug = product_slug)
+        cart_product = CartProduct.objects.get(
+            user = cart.owner,
+            cart = cart,
+            content_type = content_type,
+            object_id=product.id
+        )
+        cart.products.remove(cart_product)
+        cart.save()
+
+        return HttpResponseRedirect('/cart/')
+
+
 class CartView(View):
 
     def get(self, request, *args, **kwargs):
         customer = Customer.objects.get(user = request.user)
         cart = Cart.objects.get(owner = customer)
-        cart.save()
         return render(request, 'cart.html', {'cart' : cart})
