@@ -3,6 +3,7 @@
 {% block content %}
 
 <h3 class="text-center mt-5 mb-5">Your cart {% if not cart.products.count %}is empty{% endif %}</h3>
+{% if cart.products.count %}
 <table class="table">
     <thead>
         <tr>
@@ -20,8 +21,13 @@
             <th scope="row">{{ item.content_object.title }}</th> 
             <td class="w-25"><img src="{{ item.content_object.image.url }}" alt="" class="img-fluid"></td>
             <td>{{ item.content_object.price }} $</td>
-            <td>{{ item.qty}}</td>
-            <td>{{ item.final_price }} $</td>
+            <td><form action="{% url 'change_qty' ct_model=item.content_object.get_model_name slug=item.content_object.slug %}" method="post">
+                {% csrf_token %}
+                <input type="number" class=".form-control-sm" name="qty" min="1" style="width: 70px;" value="{{ item.qty }}">
+                <br>
+                <input type="submit" class="btn btn-primary" value="Change quantity">
+            </form></td>
+            <td class="w-25">{{ item.final_price }} $</td>
             <td><a href="{% url 'delete_from_cart' ct_model=item.content_object.get_model_name slug=item.content_object.slug %}"><button class="btn btn-danger">Remove from cart</button></a></td>
         </tr>
         {% endfor %}
@@ -33,5 +39,6 @@
         </tr>
     </tbody>
 </table>
+{% endif %}
 
 {% endblock content %}

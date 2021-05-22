@@ -110,7 +110,7 @@ class CartProduct(models.Model):
         return self.content_object.title
 
     def save(self, *args, **kwargs):
-        self.final_price = self.qty * self.content_object.price, 2
+        self.final_price = self.qty * round(self.content_object.price, 2)
         super().save(*args, **kwargs)
 
 
