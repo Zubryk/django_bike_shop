@@ -55,7 +55,10 @@
           {% endif %}
           <li class="nav-item">
             {% if request.user.is_authenticated %}
-            <span class="navbar text text-light"> Hello, {{ request.user.username }} | <a href="{% url 'logout' %}"> Log out</a></span>
+            <span class="navbar text text-light"> 
+              <a href="{% url 'profile' %}" style="color: white; text-decoration: none;">Hello, {{ request.user.username }}</a> | 
+              <a href="{% url 'logout' %}" style="color: white; text-decoration: none;"> Log out</a>
+            </span>
             {% endif %}
           </li>
 
