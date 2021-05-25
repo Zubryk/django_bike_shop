@@ -50,12 +50,12 @@
             <a class="nav-link text-light" href="{% url 'login' %}">Log In</a>
           </li>
           <li>
-            <a class="nav-link text-light" href="">Sign Up</a>
+            <a class="nav-link text-light" href="{% url 'registration' %}">Sign Up</a>
           </li>
           {% endif %}
           <li class="nav-item">
             {% if request.user.is_authenticated %}
-            <span class="navbar text text-light"> Hello, {{ request.user.username }}</span>
+            <span class="navbar text text-light"> Hello, {{ request.user.username }} | <a href="{% url 'logout' %}"> Log out</a></span>
             {% endif %}
           </li>
 
