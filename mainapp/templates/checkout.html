@@ -19,16 +19,16 @@
         <tr>
             <th scope="row">{{ item.content_object.title }}</th>
             <td class="w-25"><img src="{{ item.content_object.image.url }}" class="img-fluid"></td>
-            <td>{{ item.content_object.price }} руб.</td>
+            <td>{{ item.content_object.price }} $</td>
             <td>{{ item.qty }}</td>
-            <td>{{ item.final_price }} руб.</td>
+            <td>{{ item.final_price }} $</td>
         </tr>
         {% endfor %}
         <tr>
             <td colspan="2"></td>
-            <td>Итого:</td>
+            <td>Total</td>
             <td>{{ cart.total_products }}</td>
-            <td><strong>{{ cart.final_price }} руб.</strong></td>
+            <td><strong>{{ cart.final_price }} $</strong></td>
         </tr>
     </tbody>
 </table>
